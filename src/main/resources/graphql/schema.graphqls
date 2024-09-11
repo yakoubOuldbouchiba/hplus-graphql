@@ -1,0 +1,126 @@
+type Customer {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    phoneNumber: String!
+    address: String!
+    city: String!
+    state: String!
+    zipCode: String!
+    orders : [Order!]
+}
+
+type SalesPeople {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    phone: String!
+    address: String!
+    city: String!
+    state: String!
+    zipCode: String!
+    orders : [Order!]
+}
+
+type Product {
+    id: ID!
+    name: String!
+    size: Int!
+    variety: String!
+    price: Float!
+    status: String!
+    orderLines: [OrderLine!]
+}
+
+
+
+type Order {
+    id : ID!
+    customer: Customer!
+    salesPeople: SalesPeople!
+    orderLines: [OrderLine!]
+}
+
+type OrderLine {
+    id : ID!
+    order: Order!
+    product: Product!
+    quantity: Int!
+}
+
+input CustomerInput{
+    firstName: String!
+    lastName: String!
+    email: String!
+    phoneNumber: String!
+    address: String!
+    city: String!
+    state: String!
+    zipCode: String!
+}
+
+input SalesPeopleInput{
+    firstName: String!
+    lastName: String!
+    email: String!
+    phoneNumber: String!
+    address: String!
+    city: String!
+    state: String!
+    zipCode: String!
+}
+
+input ProductInput {
+    id: ID!
+    name: String!
+    size: Int!
+    variety: String!
+    price: Float!
+    status: String!
+}
+
+input OrderInput {
+    customerId: Int!
+    salesPersonId: Int!
+}
+
+input OrderLineInput {
+    orderInputId: String!
+    productInputId: String!
+    quantity: Int!
+}
+
+
+
+type Query{
+    customers: [Customer!]
+    customer(id: ID!) : Customer
+    customerByEmail(email : String!) : Customer
+    products: [Product!]
+    product(id: ID!): Product
+    productByName(name:String!): [Product!]
+    salesPeople : [SalesPeople!]
+    salesPerson(id: ID!): SalesPeople!
+    orders: [Order!]
+    order(id: ID!): Order!
+    orderLines: [OrderLine!]
+    orderLine(id: ID!): OrderLine!
+}
+
+
+type Mutation{
+    addCustomer(input : CustomerInput!) : Customer!
+    addProduct(input: ProductInput): Product!
+    addSalesPerson(input : SalesPeopleInput) : SalesPeople!
+    addOrder(input : OrderInput): Order!
+    addOrderLine(input : OrderLineInput) : OrderLine!
+    updateCustomer(id:ID!, input : CustomerInput!) : Customer!
+    updateProduct(id:ID!,input: ProductInput): Product!
+    updateSalesPerson(id:ID!,input : SalesPeopleInput) : SalesPeople!
+    updateOrder(id:ID!,input : OrderInput): Order!
+    updateOrderLine(id:ID!, input : OrderLineInput) : OrderLine!
+    deleteOrderLine(id:ID!):OrderLine!
+
+}
